@@ -1,0 +1,12 @@
+{
+    "presets": ["@babel/preset-env"],
+    "plugins": [
+        ["@babel/plugin-transform-runtime", {
+          "corejs": false, // or 3, if you want polyfilling for ES features
+          "helpers": true,
+          "regenerator": true,
+          "useESModules": false // set to true if you're using ES modules
+        }]
+      ]
+}
+  
