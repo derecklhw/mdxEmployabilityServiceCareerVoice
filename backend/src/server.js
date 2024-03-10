@@ -20,11 +20,7 @@ app.post("/dialogflow", async (req, res) => {
 app.post("/openai", async (req, res) => {
   const { message } = req.body;
   const response = await completion(message);
-  if (response.status === 0) {
-    res.send(response);
-  } else {
-    res.send("Error: " + response.text);
-  }
+  res.send(response);
 });
 
 app.use((err, req, res, next) => {
