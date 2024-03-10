@@ -1,10 +1,9 @@
 <script setup lang="ts">
+import ChatBox from './components/ChatBox.vue'
 </script>
 
 <template>
- <h1 class="text-3xl font-bold underline">
-    Hello world!
-  </h1>
+ <ChatBox/>
 </template>
 
 <style>
