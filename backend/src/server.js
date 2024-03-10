@@ -1,15 +1,17 @@
 import express from "express";
+import cors from "cors";
 import { detectIntent } from "./dialogflow_api.js";
 import { completion } from "./openai_api.js";
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 app.post("/dialogflow", async (req, res) => {
   const { message, sessionId } = req.body;
   const response = await detectIntent(sessionId, message, "en");
   if (response.status === 0) {
-    res.status(500).send(response.text);
+    res.send(response.text);
   } else {
     res.send("Error: " + response.text);
   }
@@ -18,7 +20,11 @@ app.post("/dialogflow", async (req, res) => {
 app.post("/openai", async (req, res) => {
   const { message } = req.body;
   const response = await completion(message);
-  res.send(response);
+  if (response.status === 0) {
+    res.send(response);
+  } else {
+    res.send("Error: " + response.text);
+  }
 });
 
 app.use((err, req, res, next) => {
