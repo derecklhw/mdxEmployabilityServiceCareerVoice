@@ -2,7 +2,6 @@
     <div ref="chatContainer">
         <Message v-for="(chat, index) of CHATS" :key="index" :content="chat.content" :role="chat.role" />
     </div>
-    <button></button>
 </template>
 
 <script setup lang="ts">
