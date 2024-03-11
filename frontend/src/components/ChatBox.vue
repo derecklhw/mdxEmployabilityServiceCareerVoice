@@ -1,5 +1,5 @@
 <template lang="">
-    <div class="flex gap-1">
+    <div class="flex gap-1 flex-col">
         <div class="flex-1 relative border-2 border-gray-300 p-3 rounded-lg flex">
             <input
                 v-model="message"
@@ -14,6 +14,9 @@
                 </button>
                 <button @click="sendChats">Send</button>
             </div>
+        </div>
+        <div class="flex justify-center">
+            <p class="text-sm text-center">MDX Employability Service Career Voice can make mistakes. Consider checking information</p>
         </div>
     </div>
 </template>
@@ -81,6 +84,7 @@ async function sendChats() {
         }
 
         CHATS.value.push(assistantMessage)
+        message.value = '';
         
     } catch (error) {
         console.error(error)
