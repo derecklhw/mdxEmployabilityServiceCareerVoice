@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import ChatBox from './components/ChatBox.vue'
 import ChatsContainer from './components/ChatsContainer.vue';
+import SoundButton from './components/SoundButton.vue';
 </script>
 
 <template>
@@ -8,8 +9,5 @@ import ChatsContainer from './components/ChatsContainer.vue';
         <ChatsContainer class="flex-1 p-2 overflow-auto"/>
         <ChatBox/>
     </div>
+   <SoundButton/>
 </template>
-
-<style>
-
-</style>
