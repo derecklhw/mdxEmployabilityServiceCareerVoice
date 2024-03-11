@@ -1,24 +1,47 @@
 <template>
     <div ref="chatContainer">
-        <Message v-for="(chat, index) of CHATS" :key="index" :content="chat.content" :role="chat.role" />
+        <transition name="fade">
+            <div v-if="CHATS.length <= 1" key="welcome">
+                <img src="../assets/mdxCareerVoiceLogo.png" alt="MDX Career Voice" class="w-1/2 mx-auto" />
+                <p class="text-6xl text-center">How can i help you today?</p>
+            </div>
+        </transition>
+        <transition name="fade" mode="out-in">
+            <div v-if="CHATS.length > 1">
+                <Message v-for="(chat, index) in CHATS" :key="index" :content="chat.content" :role="chat.role" />
+            </div>
+        </transition>
     </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
+import { nextTick, onMounted, ref, watch } from 'vue';
 import Message from './Message.vue';
 import { CHATS } from '../stores/chat';
+import { soundEnabled } from '../stores/settings';
 import { useSpeechSynthesis } from '@vueuse/core';
 
 const chatContainer = ref<HTMLElement | null>(null);
 
+const scrollToBottom = () => {
+    nextTick(() => {
+        if (chatContainer.value) {
+            chatContainer.value.scrollTo({
+                top: chatContainer.value.scrollHeight,
+                behavior: "smooth"
+            });
+        }
+    });
+}
+
 watch(CHATS, () => {
     let lastMessage = CHATS.value[CHATS.value.length - 1];
+    scrollToBottom();
     if (lastMessage.role === 'user' || lastMessage.role === 'system') {
         return;
     }
-    const {speak} = useSpeechSynthesis(lastMessage.content, { lang: 'en-US', pitch: 1, rate: 1, volume: 0.5});
-    speak()
+    const {isSupported, speak} = useSpeechSynthesis(lastMessage.content, { lang: 'en-US', pitch: 1, rate: 1, volume: 0.5});
+    if (isSupported && soundEnabled.value) {speak()}
 }, { deep: true });
 
 onMounted(() => {
@@ -26,3 +49,13 @@ onMounted(() => {
 });
 
 </script>
+
+<style>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0;
+}
+</style>
+
