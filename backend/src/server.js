@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import { detectIntent } from "./dialogflow_api.js";
 import { completion } from "./openai_api.js";
+import { WebhookClient } from "dialogflow-fulfillment";
 
 const app = express();
 app.use(cors());
@@ -22,6 +23,18 @@ app.post("/openai", async (req, res) => {
   const { message } = req.body;
   const response = await completion(message);
   res.send(response);
+});
+
+app.post("/dialogflow-webhook", async (req, res) => {
+  const agent = new WebhookClient({ request: req, response: res });
+
+  function Welcome(agent) {
+    agent.add("Welcome to my agent!");
+  }
+
+  let intentMap = new Map();
+  intentMap.set("Default Welcome Intent", Welcome);
+  agent.handleRequest(intentMap);
 });
 
 app.use((err, req, res, next) => {

@@ -76,6 +76,8 @@ async function sendChats() {
         role: 'user',
         content: message.value
     })
+    message.value = '';
+    
     try {
         const response = await axios.post('http://localhost:3000/dialogflow', {
             message: CHATS.value,
@@ -86,7 +88,6 @@ async function sendChats() {
             role: response.data.role,
             content: response.data.content
         }
-        message.value = '';
         if (isUserVoiceEnabled.value) {
             isUserVoiceEnabled.value = false;
         }
