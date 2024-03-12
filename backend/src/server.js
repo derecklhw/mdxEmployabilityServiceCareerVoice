@@ -28,14 +28,20 @@ app.post("/openai", async (req, res) => {
 app.post("/dialogflow-webhook", async (req, res) => {
   const agent = new WebhookClient({ request: req, response: res });
 
-  function Welcome(agent) {
+  function welcome(agent) {
     agent.add(
       "Hi there, I’m MDX Employability Service Career Voice. I can help you find an internship, book a 1:1 appointment with our advisors, improve your cv and more. In which one would you need assistance?"
     );
   }
 
+  function findAnInternship(agent) {
+    let industry = agent.parameters.Industry;
+    agent.add(`We have a wide range of internships available in ${industry}.`);
+  }
+
   let intentMap = new Map();
-  intentMap.set("Default Welcome Intent", Welcome);
+  intentMap.set("Default Welcome Intent", welcome);
+  intentMap.set("Find an internship", findAnInternship);
   agent.handleRequest(intentMap);
 });
 

@@ -93,9 +93,18 @@ async function sendChats() {
         }
 
         CHATS.value.push(assistantMessage)
+        openUrlLink(assistantMessage.content)
         
     } catch (error) {
         console.error(error)
+    }
+}
+
+async function openUrlLink(message: string) {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const url = message.match(urlRegex);
+    if (url) {
+        window.open(url[0], '_blank');
     }
 }
 
