@@ -5,14 +5,21 @@
                 v-model="message"
                 type="text" 
                 class="w-full outline-none"
-                placeholder="Type a message..."
+                :placeholder="isUserVoiceEnabled ? 'Speak to me' : 'Type a message'"
+                @keyup.enter="sendChats"
             />
             <div class="flex gap-2">
-                <button class="border-gray-300 border px-2 py-1 rounded" @click="isUserVoiceEnabled= !isUserVoiceEnabled">
-                    <span v-if="isUserVoiceEnabled">On</span>
-                    <span v-else>Off</span>
+                <button class="mx-2" @click="isUserVoiceEnabled= !isUserVoiceEnabled">
+                    <span v-if="isUserVoiceEnabled">
+                        <BsMicMuteFill class="h-6 w-6 text-slate-950" />
+                    </span>
+                    <span v-else>
+                        <BsMicFill class="h-6 w-6 text-slate-950" />
+                    </span>
                 </button>
-                <button @click="sendChats">Send</button>
+                <button @click="sendChats">
+                    <FlFilledSend class="h-6 w-6 text-slate-950" />
+                </button>
             </div>
         </div>
         <div class="flex justify-center">
@@ -27,6 +34,7 @@ import { CHATS } from '../stores/chat';
 import { ref, watch } from 'vue';
 import { CHAT } from '../types';
 import { useSpeechRecognition } from '@vueuse/core';
+import { FlFilledSend, BsMicFill, BsMicMuteFill } from '@kalimahapps/vue-icons'
 
 const message = ref('');
 const isUserVoiceEnabled = ref(false);
@@ -82,9 +90,12 @@ async function sendChats() {
             role: "assistant",
             content: "Hello, I am the MDX Employability Service Career Voice. How can I help you today?"
         }
+        message.value = '';
+        if (isUserVoiceEnabled.value) {
+            isUserVoiceEnabled.value = false;
+        }
 
         CHATS.value.push(assistantMessage)
-        message.value = '';
         
     } catch (error) {
         console.error(error)
