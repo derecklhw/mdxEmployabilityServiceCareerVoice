@@ -33,7 +33,7 @@ export async function detectIntent(sessionId, query, languageCode) {
     queryInput: {
       text: {
         // The query to send to the dialogflow agent
-        text: query,
+        text: query.content,
         // The language used by the client
         languageCode: languageCode,
       },
@@ -43,11 +43,15 @@ export async function detectIntent(sessionId, query, languageCode) {
   // Send request and log result
   try {
     const responses = await sessionClient.detectIntent(request);
-    const result = responses[0].queryResult;
+    const result = {
+      role: "assistant",
+      content: responses[0].queryResult.fulfillmentText,
+    };
 
     return {
       status: 0,
-      text: result.fulfillmentText,
+      text: result,
+      intentName: responses[0].queryResult.intent.displayName,
     };
   } catch (error) {
     return {

@@ -77,18 +77,14 @@ async function sendChats() {
         content: message.value
     })
     try {
-        // const response = await axios.post('http://localhost:3000/openai', {
-        //     message: CHATS.value
-        // });
-
-        // let assistantMessage: CHAT = {
-        //     role: response.data.role,
-        //     content: response.data.content
-        // }
+        const response = await axios.post('http://localhost:3000/dialogflow', {
+            message: CHATS.value,
+            sessionId: '1234567890'
+        });
 
         let assistantMessage: CHAT = {
-            role: "assistant",
-            content: "Hello, I am the MDX Employability Service Career Voice. How can I help you today?"
+            role: response.data.role,
+            content: response.data.content
         }
         message.value = '';
         if (isUserVoiceEnabled.value) {

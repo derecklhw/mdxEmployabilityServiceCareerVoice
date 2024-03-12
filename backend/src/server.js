@@ -9,7 +9,8 @@ app.use(express.json());
 
 app.post("/dialogflow", async (req, res) => {
   const { message, sessionId } = req.body;
-  const response = await detectIntent(sessionId, message, "en");
+  const mostRecentMessage = message[message.length - 1];
+  const response = await detectIntent(sessionId, mostRecentMessage, "en");
   if (response.status === 0) {
     res.send(response.text);
   } else {
