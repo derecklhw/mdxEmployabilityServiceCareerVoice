@@ -2,6 +2,7 @@
 import ChatBox from './components/ChatBox.vue'
 import ChatsContainer from './components/ChatsContainer.vue';
 import SoundButton from './components/SoundButton.vue';
+import ClearChatsButton from './components/ClearChatsButton.vue';
 </script>
 
 <template>
@@ -15,5 +16,6 @@ import SoundButton from './components/SoundButton.vue';
 
         <div class="bg-red-500 w-full h-4 mt-2"></div>
     </div>
-   <SoundButton/>
+    <SoundButton/>
+    <ClearChatsButton/>
 </template>

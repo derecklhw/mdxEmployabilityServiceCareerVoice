@@ -8,7 +8,7 @@
         </transition>
         <transition name="fade" mode="out-in">
             <div v-if="CHATS.length > 1">
-                <Message v-for="(chat, index) in CHATS" :key="index" :content="chat.content" :role="chat.role" />
+                <Message v-for="(chat, index) in CHATS.slice(1)" :key="index" :content="chat.content" :role="chat.role" />
             </div>
         </transition>
     </div>

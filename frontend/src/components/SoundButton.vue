@@ -1,10 +1,10 @@
 <template>
      <div class="absolute bottom-8 right-6 cursor-pointer"  @click="toggleSound">
         <span v-if="sound">
-          <FlFilledSpeakerOff class="h-12 w-12 text-red-500" />
+          <FlFilledSpeakerOff class="h-10 w-10 text-red-500" />
         </span>
         <span v-else>
-          <FlFilledSpeaker2 class="h-12 w-12 text-red-500" />
+          <FlFilledSpeaker2 class="h-10 w-10 text-red-500" />
         </span>
     </div>
 </template>
