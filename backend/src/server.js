@@ -2,7 +2,11 @@ import express from "express";
 import cors from "cors";
 import { detectIntent } from "./dialogflow_api.js";
 import { completion } from "./openai_api.js";
+import { bookOnCalendar } from "./googleCalendar_api.js";
 import { WebhookClient } from "dialogflow-fulfillment";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 app.use(cors());
@@ -19,12 +23,6 @@ app.post("/dialogflow", async (req, res) => {
   }
 });
 
-app.post("/openai", async (req, res) => {
-  const { message } = req.body;
-  const response = await completion(message);
-  res.send(response);
-});
-
 app.post("/dialogflow-webhook", async (req, res) => {
   const agent = new WebhookClient({ request: req, response: res });
 
@@ -39,9 +37,36 @@ app.post("/dialogflow-webhook", async (req, res) => {
     agent.add(`We have a wide range of internships available in ${industry}.`);
   }
 
+  async function bookAnAppointment(agent) {
+    try {
+      const response = await bookOnCalendar(agent);
+      console.log(response);
+      if (response === "Event already exists") {
+        agent.add("Sorry, that time is already booked. Please choose another.");
+      } else {
+        const appointmentDate = new Date(
+          response.data.start.dateTime
+        ).toLocaleString("en-GB", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+        });
+        agent.add(
+          `Your appointment has been successfully booked for ${appointmentDate}.`
+        );
+      }
+    } catch (error) {
+      agent.add(error);
+    }
+  }
+
   let intentMap = new Map();
   intentMap.set("Default Welcome Intent", welcome);
   intentMap.set("Find an internship", findAnInternship);
+  intentMap.set("Book 1:1 appointment", bookAnAppointment);
   agent.handleRequest(intentMap);
 });
 
@@ -50,6 +75,6 @@ app.use((err, req, res, next) => {
   res.status(500).send("Something broke!");
 });
 
-app.listen(3000, () => {
+app.listen(process.env.PORT || 3000, () => {
   console.log("Server is running on port 3000");
 });
