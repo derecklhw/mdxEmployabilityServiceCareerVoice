@@ -5,7 +5,7 @@
                 v-model="message"
                 type="text" 
                 class="w-full outline-none"
-                :placeholder="isUserVoiceEnabled ? 'Speak to me' : 'Type a message'"
+                :placeholder="isUserVoiceEnabled ? 'Speak to me...' : 'Type a message...'"
                 @keyup.enter="sendChats"
             />
             <div class="flex gap-2">
