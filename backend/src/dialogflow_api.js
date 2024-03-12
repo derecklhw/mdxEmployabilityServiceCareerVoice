@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import dialogflow from "@google-cloud/dialogflow";
+import { v2beta1 } from "@google-cloud/dialogflow";
 
 dotenv.config();
 
@@ -17,8 +17,10 @@ const CONFIGURATION = {
   },
 };
 
+const KNOWLEDGEBASEID = process.env.DIALOGFLOW_KNOWLEDGEBASE_ID;
+
 // Create a new session
-const sessionClient = new dialogflow.SessionsClient(CONFIGURATION);
+const sessionClient = new v2beta1.SessionsClient(CONFIGURATION);
 
 // Detect Intent from the text
 export async function detectIntent(sessionId, query, languageCode) {
@@ -26,6 +28,9 @@ export async function detectIntent(sessionId, query, languageCode) {
     PROJECT_ID,
     sessionId
   );
+
+  let knowledgeBasePath =
+    "projects/" + PROJECT_ID + "/knowledgeBases/" + KNOWLEDGEBASEID + "";
 
   // The text query request.
   let request = {
@@ -37,6 +42,9 @@ export async function detectIntent(sessionId, query, languageCode) {
         // The language used by the client
         languageCode: languageCode,
       },
+    },
+    queryParams: {
+      knowledgeBaseNames: [knowledgeBasePath],
     },
   };
 

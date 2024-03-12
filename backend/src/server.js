@@ -29,7 +29,9 @@ app.post("/dialogflow-webhook", async (req, res) => {
   const agent = new WebhookClient({ request: req, response: res });
 
   function Welcome(agent) {
-    agent.add("Welcome to my agent!");
+    agent.add(
+      "Hi there, I’m MDX Employability Service Career Voice. I can help you find an internship, book a 1:1 appointment with our advisors, improve your cv and more. In which one would you need assistance?"
+    );
   }
 
   let intentMap = new Map();
