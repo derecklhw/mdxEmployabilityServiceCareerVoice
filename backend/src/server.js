@@ -32,9 +32,18 @@ app.post("/dialogflow-webhook", async (req, res) => {
     );
   }
 
-  function findAnInternship(agent) {
+  async function findAnInternship(agent) {
     let industry = agent.parameters.Industry;
-    agent.add(`We have a wide range of internships available in ${industry}.`);
+    let prompt = [
+      {
+        role: "user",
+        content: `"Name three ${industry} sector companies in Mauritius, separated by commas, without using unordered or ordered bullet points, just the names in one line."`,
+      },
+    ];
+    let response = await completion(prompt);
+    agent.add(
+      `Here is a list of internships available in ${industry}: ${response.content}`
+    );
   }
 
   async function bookAnAppointment(agent) {
