@@ -20,6 +20,7 @@
   "dependencies": {
     "@babel/runtime": "^7.24.0",
     "@google-cloud/dialogflow": "^6.3.1",
+    "@googlemaps/google-maps-services-js": "^3.3.42",
     "cors": "^2.8.5",
     "dialogflow-fulfillment": "^0.6.1",
     "dotenv": "^16.4.5",

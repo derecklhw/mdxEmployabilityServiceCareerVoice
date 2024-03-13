@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import { detectIntent } from "./dialogflow_api.js";
 import { completion } from "./openai_api.js";
+import { getGoogleMaps } from "./googleMap_api.js";
 import { bookOnCalendar } from "./googleCalendar_api.js";
 import { WebhookClient } from "dialogflow-fulfillment";
 import dotenv from "dotenv";
@@ -11,6 +12,12 @@ dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+app.post("/googleMaps", async (req, res) => {
+  const { location } = req.body;
+  const response = await getGoogleMaps(location);
+  res.send(response);
+});
 
 app.post("/dialogflow", async (req, res) => {
   const { message, sessionId } = req.body;

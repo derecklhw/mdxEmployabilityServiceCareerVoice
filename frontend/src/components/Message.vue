@@ -4,7 +4,7 @@
         <div v-if="isUser" class="font-bold">You</div>
         <div v-else class="font-bold">MDX Employability Service Career Voice</div>
         <div v-if="isHtmlContent" v-html="content"></div>
-        <div v-else>{{ content }}</div>      
+        <div v-else>{{ content }}</div>
       </div>
     </div>
   </template>
