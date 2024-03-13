@@ -13,12 +13,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.post("/googleMaps", async (req, res) => {
-  const { location } = req.body;
-  const response = await getGoogleMaps(location);
-  res.send(response);
-});
-
 app.post("/dialogflow", async (req, res) => {
   const { message, sessionId } = req.body;
   const mostRecentMessage = message[message.length - 1];
@@ -78,10 +72,17 @@ app.post("/dialogflow-webhook", async (req, res) => {
     }
   }
 
+  async function requestCompanyLocation(agent) {
+    const company = agent.parameters.Company;
+    const response = await getGoogleMaps(company);
+    agent.add(response);
+  }
+
   let intentMap = new Map();
   intentMap.set("Default Welcome Intent", welcome);
   intentMap.set("Find an internship", findAnInternship);
   intentMap.set("Book 1:1 appointment", bookAnAppointment);
+  intentMap.set("Request Company Location", requestCompanyLocation);
   agent.handleRequest(intentMap);
 });
 

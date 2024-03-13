@@ -1,5 +1,5 @@
 <template>
-    <div class="flex gap-1 my-4">
+    <div class="flex gap-1 my-6">
       <div>
         <div v-if="isUser" class="font-bold">You</div>
         <div v-else class="font-bold">MDX Employability Service Career Voice</div>
