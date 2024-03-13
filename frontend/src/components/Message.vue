@@ -1,9 +1,9 @@
 <template>
-    <div class="flex gap-1 my-6">
+    <div class="flex gap-1 mb-6">
       <div>
         <div v-if="isUser" class="font-bold">You</div>
         <div v-else class="font-bold">MDX Employability Service Career Voice</div>
-        <div v-if="isHtmlContent" v-html="content"></div>
+        <div v-if="isHtmlContent" v-html="content" class="mt-4"></div>
         <div v-else>{{ content }}</div>
       </div>
     </div>
