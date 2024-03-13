@@ -37,19 +37,18 @@ app.post("/dialogflow-webhook", async (req, res) => {
     let prompt = [
       {
         role: "user",
-        content: `"Name three ${industry} sector companies in Mauritius, separated by commas, without using unordered or ordered bullet points, just the names in one line."`,
+        content: `"Directly list three companies in the ${industry} sector located in Mauritius, ensuring the response format strictly follows this structure: '{company1}, {company2}, {company3}'. Please exclude any additional details or context, and do not use unordered or ordered bullet points."`,
       },
     ];
     let response = await completion(prompt);
     agent.add(
-      `Here is a list of internships available in ${industry}: ${response.content}`
+      `Here is a list of internships available in ${industry}: ${response.content}. Would you like to get the location information for any of these companies, or perhaps for another company of your interest?`
     );
   }
 
   async function bookAnAppointment(agent) {
     try {
       const response = await bookOnCalendar(agent);
-      console.log(response);
       if (response === "Event already exists") {
         agent.add("Sorry, that time is already booked. Please choose another.");
       } else {

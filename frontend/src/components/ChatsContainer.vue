@@ -40,7 +40,15 @@ watch(CHATS, () => {
     if (lastMessage.role === 'user' || lastMessage.role === 'system') {
         return;
     }
-    const {isSupported, speak} = useSpeechSynthesis(lastMessage.content, { lang: 'en-US', pitch: 1, rate: 1, volume: 0.5});
+    
+    let messageContent = lastMessage.content;
+
+    const isHtmlContent = /<\/?[a-z][\s\S]*>/i.test(lastMessage.content);
+    if (isHtmlContent) {
+        messageContent = "A Google Map has just been loaded, ready for exploration!";
+    }
+
+    const {isSupported, speak} = useSpeechSynthesis(messageContent, { lang: 'en-US', pitch: 1, rate: 1, volume: 0.5});
     if (isSupported && soundEnabled.value) {speak()}
 }, { deep: true });
 

@@ -102,9 +102,15 @@ async function sendChats() {
 
 async function openUrlLink(message: string) {
     const urlRegex = /(https?:\/\/[^\s]+)/g;
-    const url = message.match(urlRegex);
-    if (url) {
-        window.open(url[0], '_blank');
+    const googleMapsRegex = /(https?:\/\/(www\.)?(google\.com\/maps|goo\.gl\/maps)[^\s]*)/i;
+    
+    const urls = message.match(urlRegex);
+    if (urls) {
+        const nonGoogleMapsUrls = urls.filter(url => !googleMapsRegex.test(url));
+        
+        if (nonGoogleMapsUrls.length > 0) {
+            window.open(nonGoogleMapsUrls[0], '_blank');
+        }
     }
 }
 
