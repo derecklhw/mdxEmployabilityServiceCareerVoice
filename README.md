@@ -1,8 +1,12 @@
 # mdxEmployabilityServiceCareerVoice
 
-[Dialogflow ES](https://dialogflow.cloud.google.com)
+## Technology and API used
 
-Reference: <https://www.youtube.com/watch?v=dFN79tEr_bc>
+- [Dialogflow ES](https://dialogflow.cloud.google.com)
+- [Node.js Client for Google Maps Services](https://github.com/googlemaps/google-maps-services-js?tab=readme-ov-file)
+- [MapsEmbed API](https://developers.google.com/maps/documentation/embed/get-started)
+- [Places API](https://developers.google.com/maps/documentation/places/web-service)
+- [OpenAI API](https://platform.openai.com/docs/overview)
 
 ## Frontend
 
@@ -51,3 +55,7 @@ Run the server
 ```bash
 npm run dev
 ```
+
+## Reference
+
+- [ Dialogflow API with NodeJS | Dialogflow Detect Intent Example | Dialogflow Custom Integartion ](https://www.youtube.com/watch?v=dFN79tEr_bc)
