@@ -90,9 +90,20 @@ async function sendChats() {
             sessionId: '1234567890'
         });
 
-        let assistantMessage: CHAT = {
-            role: response.data.role,
-            content: response.data.content
+        let assistantMessage: CHAT;
+
+        if (response.data.content.startsWith('{')) {
+            response.data.content = JSON.parse(response.data.content);
+            assistantMessage = {
+                role: response.data.role,
+                content: "Here are the instruction: " + response.data.content.instructions,
+                html: response.data.content.iframe
+            }
+        } else {
+            assistantMessage = {
+                role: response.data.role,
+                content: response.data.content
+            }
         }
         if (isUserVoiceEnabled.value) {
             isUserVoiceEnabled.value = false;

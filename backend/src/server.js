@@ -75,7 +75,7 @@ app.post("/dialogflow-webhook", async (req, res) => {
   async function requestCompanyLocation(agent) {
     const company = agent.parameters.Company;
     const response = await getGoogleMaps(company);
-    agent.add(response);
+    agent.add(JSON.stringify(response));
   }
 
   let intentMap = new Map();

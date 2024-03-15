@@ -8,7 +8,7 @@
         </transition>
         <transition name="fade" mode="out-in">
             <div v-if="CHATS.length > 1">
-                <Message v-for="(chat, index) in CHATS.slice(1)" :key="index" :content="chat.content" :role="chat.role" />
+                <Message v-for="(chat, index) in CHATS.slice(1)" :key="index" :content="chat.content" :role="chat.role" :html="chat.html" />
             </div>
         </transition>
     </div>
@@ -42,11 +42,6 @@ watch(CHATS, () => {
     }
     
     let messageContent = lastMessage.content;
-
-    const isHtmlContent = /<\/?[a-z][\s\S]*>/i.test(lastMessage.content);
-    if (isHtmlContent) {
-        messageContent = "A Google Map has just been loaded, ready for exploration!";
-    }
 
     const {isSupported, speak} = useSpeechSynthesis(messageContent, { lang: 'en-US', pitch: 1, rate: 1, volume: 0.5});
     if (isSupported && soundEnabled.value) {speak()}
