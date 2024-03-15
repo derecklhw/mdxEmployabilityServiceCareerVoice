@@ -8,7 +8,7 @@
         </transition>
         <transition name="fade" mode="out-in">
             <div v-if="CHATS.length > 1">
-                <Message v-for="(chat, index) in CHATS.slice(1)" :key="index" :content="chat.content" :role="chat.role" :html="chat.html" />
+                <Message @submitDate="handleNewDate" v-for="(chat, index) in CHATS.slice(1)" :key="index" :content="chat.content" :role="chat.role" :html="chat.html" />
             </div>
         </transition>
     </div>
@@ -20,6 +20,15 @@ import Message from './Message.vue';
 import { CHATS } from '../stores/chat';
 import { soundEnabled } from '../stores/settings';
 import { useSpeechSynthesis } from '@vueuse/core';
+
+const emit = defineEmits({
+  changeMessage: (date: string) => {
+    if (date) {
+      return true;
+    }
+  
+  }
+});
 
 const chatContainer = ref<HTMLElement | null>(null);
 
@@ -50,6 +59,10 @@ watch(CHATS, () => {
 onMounted(() => {
     chatContainer.value?.scrollTo(0, chatContainer.value.scrollHeight);
 });
+
+function handleNewDate(date: string) {
+    emit('changeMessage', date);    
+}
 
 </script>
 

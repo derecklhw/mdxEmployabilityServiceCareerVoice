@@ -39,6 +39,10 @@ import { FlFilledSend, BsMicFill, BsMicMuteFill } from '@kalimahapps/vue-icons'
 const message = ref('');
 const isUserVoiceEnabled = ref(false);
 
+const props = defineProps({
+    newMessage: String
+});
+
 const { isSupported,
   isListening,
   isFinal,
@@ -48,6 +52,13 @@ const { isSupported,
     lang: 'en-US',
     continuous: false,
 });
+
+watch(() => props.newMessage, (newVal) => {
+  if (newVal) {
+    message.value = newVal;
+    sendChats();
+  }
+}, { immediate: true });
 
 if (isSupported.value) {
     watch(result, (value) => {
