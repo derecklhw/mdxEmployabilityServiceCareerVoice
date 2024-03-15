@@ -35,6 +35,10 @@ Create `.env` file in `backend/` directory and add the following
 ```env
 DIALOGFLOW_CREDENTIALS = "dialogflow-credentials.json"
 OPENAI_API_KEY = "openai-api"
+DIALOGFLOW_KNOWLEDGEBASE_ID = "knowledgebase-id"
+PORT = 3000
+GOOGLE_CALENDAR_ID = "calendar-id"
+GOOGLE_MAPS_API_KEY = "maps-api-key"
 ```
 
 ### Run REST API and dialog flow webhook server
