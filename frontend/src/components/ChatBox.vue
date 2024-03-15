@@ -57,6 +57,12 @@ if (isSupported.value) {
     });
 }
 
+watch(isFinal, (value) => {
+    if (value && isUserVoiceEnabled.value) {
+        sendChats();
+    }
+});
+
 watch(isListening, (value) => {
   if (!value && isUserVoiceEnabled.value) {
     start();
