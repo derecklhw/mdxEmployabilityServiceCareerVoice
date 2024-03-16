@@ -43,13 +43,13 @@ GOOGLE_MAPS_API_KEY = "maps-api-key"
 
 ### Run REST API and dialog flow webhook server
 
-Install and run [Ngrok](https://ngrok.com/) (unix system) or npm [localhost](https://www.npmjs.com/package/localhost) to expose local server to the internet for Dialogflow webhook
+Install and run [Ngrok](https://ngrok.com/) (unix system) or npm package [localhost](https://www.npmjs.com/package/localhost) to expose local server to the internet for Dialogflow webhook.
 
 ```bash
 ngrok http 3000
 ```
 
-Add the exposed local server URL to the Dialogflow ES webhook
+Add the exposed local server URL to the Dialogflow ES webhook.
 
 ![Dialogflow ES webhook](images/dialogflowWebhookUrl.png)
 
@@ -59,6 +59,11 @@ Run the server
 ```bash
 npm run dev
 ```
+
+## Future Work
+
+- Provide the user's location to the backend server to get the accurate location-based information.
+- Implement `Pinia` for state management in the frontend. Example: the calendar's visibility by the user's date selection shall persist across page reloads.
 
 ## Reference
 

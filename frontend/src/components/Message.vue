@@ -6,7 +6,6 @@
       <div>{{ content }}</div>
       <div v-html="html" class="mt-4"></div>
       
-      //! ensures that the calendar's visibility is controlled not only by the user's interactions during a single session but also persists across page reloads.
       <Calendar v-if="showCalendar" v-model="date" inline showWeek class="border"/>
     </div>
   </div>
