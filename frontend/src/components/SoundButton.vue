@@ -11,17 +11,11 @@
 <script setup lang="ts">
 import { soundEnabled } from '../stores/settings';
 import { FlFilledSpeaker2, FlFilledSpeakerOff } from '@kalimahapps/vue-icons'
-import { useSpeechSynthesis } from '@vueuse/core';
 
 const sound = soundEnabled;
 
 const toggleSound = () => {
   soundEnabled.value = !soundEnabled.value;
-  if (!soundEnabled.value)
-    {
-      const {isSupported, stop} = useSpeechSynthesis('');
-      if (isSupported) {stop()}
-    }
 };
 
 </script>

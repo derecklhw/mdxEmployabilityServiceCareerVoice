@@ -9,12 +9,17 @@
                 @keyup.enter="sendChats"
             />
             <div class="flex gap-2">
-                <button class="mx-2" @click="isUserVoiceEnabled= !isUserVoiceEnabled">
+                <button class="" @click="isUserVoiceEnabled= !isUserVoiceEnabled">
                     <span v-if="isUserVoiceEnabled">
                         <BsMicMuteFill class="h-6 w-6 text-slate-950" />
                     </span>
                     <span v-else>
                         <BsMicFill class="h-6 w-6 text-slate-950" />
+                    </span>
+                </button>
+                <button class="mx-2" @click="stopSpeechSynthesis">
+                    <span>
+                        <FaCircleStop class="h-6 w-6 text-slate-950" />
                     </span>
                 </button>
                 <button @click="sendChats">
@@ -33,8 +38,8 @@ import axios from 'axios';
 import { CHATS } from '../stores/chat';
 import { ref, watch } from 'vue';
 import { CHAT } from '../types';
-import { useSpeechRecognition } from '@vueuse/core';
-import { FlFilledSend, BsMicFill, BsMicMuteFill } from '@kalimahapps/vue-icons'
+import { useSpeechRecognition, useSpeechSynthesis } from '@vueuse/core';
+import { FlFilledSend, BsMicFill, BsMicMuteFill, FaCircleStop } from '@kalimahapps/vue-icons'
 
 const message = ref('');
 const isUserVoiceEnabled = ref(false);
@@ -140,6 +145,11 @@ async function openUrlLink(message: string) {
             window.open(nonGoogleMapsUrls[0], '_blank');
         }
     }
+}
+
+function stopSpeechSynthesis() {
+      const {isSupported, stop} = useSpeechSynthesis('');
+      if (isSupported) {stop()}
 }
 
 </script>
