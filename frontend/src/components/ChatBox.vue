@@ -39,6 +39,7 @@ import { CHATS } from '../stores/chat';
 import { ref, watch } from 'vue';
 import { CHAT } from '../types';
 import { useSpeechRecognition, useSpeechSynthesis } from '@vueuse/core';
+import { v4 as uuidv4 } from 'uuid';
 import { FlFilledSend, BsMicFill, BsMicMuteFill, FaCircleStop } from '@kalimahapps/vue-icons'
 
 const message = ref('');
@@ -95,6 +96,7 @@ watch(isUserVoiceEnabled, (value) => {
 
 async function sendChats() {
     CHATS.value.push({
+        id: uuidv4(),
         role: 'user',
         content: message.value
     })
@@ -111,12 +113,14 @@ async function sendChats() {
         if (response.data.content.startsWith('{')) {
             response.data.content = JSON.parse(response.data.content);
             assistantMessage = {
+                id: uuidv4(),
                 role: response.data.role,
                 content: "Here are the instruction: " + response.data.content.instructions,
                 html: response.data.content.iframe
             }
         } else {
             assistantMessage = {
+                id: uuidv4(),
                 role: response.data.role,
                 content: response.data.content
             }

@@ -14,10 +14,12 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
 import Calendar from 'primevue/calendar';
+import { CHATS } from '../stores/chat';
 
 const date = ref('');
 
 const props = defineProps<{
+  id: string;
   content: string;
   role: string;
   html: string;
@@ -43,7 +45,8 @@ const isUser = computed(() => {
 });
 
 const showCalendar = computed(() => {
-  return props.content === "On which date would you like to book your appointment?" && date.value === '';
+  if (CHATS.value[CHATS.value.length - 1].id === props.id && props.role !== "user" && props.content === "On which date would you like to book your appointment?") return true
+  return false;
 });
 
 </script>

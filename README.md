@@ -63,7 +63,6 @@ npm run dev
 ## Future Work
 
 - Provide the user's location to the backend server to get the accurate location-based information.
-- Implement `Pinia` for state management in the frontend. Example: the calendar's visibility by the user's date selection shall persist across page reloads.
 
 ## Reference
 
