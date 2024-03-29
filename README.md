@@ -41,6 +41,14 @@ GOOGLE_CALENDAR_ID = "calendar-id"
 GOOGLE_MAPS_API_KEY = "maps-api-key"
 ```
 
+### Dialogflow ES
+
+Create a Dialogflow ES agent and import the `dialogflow-agent.zip` file in the `dialogflow/` directory.
+
+### Dialogflow ES Knowledge Base
+
+Create a Dialogflow ES knowledge base and add the document `employabilityServiceKnowledgeBase` in the `dialogflow/` directory.
+
 ### Run REST API and dialog flow webhook server
 
 Install and run [Ngrok](https://ngrok.com/) (unix system) or npm package [localhost](https://www.npmjs.com/package/localhost) to expose local server to the internet for Dialogflow webhook.
